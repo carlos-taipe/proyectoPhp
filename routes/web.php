@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\ContactanosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductoController;
-use App\Mail\ContactanosMailable;
-use Illuminate\Support\Facades\Mail;
+
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -12,10 +12,6 @@ Route::resource('productos', ProductoController::class);
 
 Route::view('nosotros', 'nosotros')->name('nosotros');
 
-Route::get('contactanos', function () {
+Route::get('contactanos', [ContactanosController::class,'index'])->name('contactanos.index');
 
-    $correo = new ContactanosMailable;
-    Mail::to('ctaipecasas@gmail.com')->send($correo);
-
-    return 'mensaje enviado';
-});
+Route::post('contactanos', [ContactanosController::class,'store'])->name('contactanos.store');
